@@ -1,0 +1,95 @@
+<%
+  const statusLabels = {
+    new: 'Новая',
+    confirmed: 'Подтверждена',
+    done: 'Выполнена',
+    cancelled: 'Отменена'
+  };
+  const statuses = ['new', 'confirmed', 'done', 'cancelled'];
+%>
+<%- include('../partials/head') %>
+<%- include('../partials/icons') %>
+<%- include('../partials/header') %>
+
+<main>
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section__head">
+        <div>
+          <span class="eyebrow">Панель управления</span>
+          <h1>Заявки на ремонт</h1>
+          <p class="muted">Вы вошли как <b><%= admin.username %></b></p>
+        </div>
+        <form method="post" action="/admin/logout">
+          <button class="btn btn--ghost" type="submit">Выйти</button>
+        </form>
+      </div>
+
+      <div class="stats stats--admin">
+        <div class="stat"><b><%= stats.total %></b><span>всего заявок</span></div>
+        <div class="stat"><b><%= stats.new %></b><span>новых</span></div>
+        <div class="stat"><b><%= stats.confirmed %></b><span>подтверждено</span></div>
+        <div class="stat"><b><%= stats.done %></b><span>выполнено</span></div>
+        <div class="stat"><b><%= stats.cancelled %></b><span>отменено</span></div>
+      </div>
+
+      <% if (!bookings.length) { %>
+        <div class="card-panel empty">
+          <h3>Заявок пока нет</h3>
+          <p>Как только клиент отправит форму на сайте, заявка появится здесь.</p>
+        </div>
+      <% } else { %>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>Создана</th>
+                <th>Клиент</th>
+                <th>Телефон</th>
+                <th>Автомобиль</th>
+                <th>Услуга</th>
+                <th>Желаемая дата</th>
+                <th>Статус</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% bookings.forEach(function (b) { %>
+                <tr>
+                  <td><%= b.id %></td>
+                  <td><%= formatDate(b.created_at) %></td>
+                  <td>
+                    <b><%= b.client_name %></b>
+                    <% if (b.comment) { %><br><small class="muted"><%= b.comment %></small><% } %>
+                  </td>
+                  <td><a href="tel:<%= b.phone.replace(/[^\d+]/g, '') %>"><%= b.phone %></a></td>
+                  <td><%= b.car_model || '—' %></td>
+                  <td><%= b.service_title || 'Консультация' %></td>
+                  <td><%= b.preferred_date ? formatDate(b.preferred_date) : '—' %></td>
+                  <td>
+                    <form class="status-form" method="post" action="/admin/bookings/<%= b.id %>/status">
+                      <select name="status" aria-label="Статус заявки <%= b.id %>">
+                        <% statuses.forEach(function (st) { %>
+                          <option value="<%= st %>" <%= b.status === st ? 'selected' : '' %>><%= statusLabels[st] %></option>
+                        <% }); %>
+                      </select>
+                      <button class="btn btn--sm btn--ghost" type="submit">OK</button>
+                    </form>
+                    <span class="badge badge--<%= b.status %>"><%= statusLabels[b.status] || b.status %></span>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+
+      <p class="muted small">
+        Данные хранятся в таблице <code>bookings</code> базы MySQL.
+        <% if (demoMode) { %>Сейчас включён демо-режим: изменения живут до перезапуска сервера.<% } %>
+      </p>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

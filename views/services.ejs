@@ -1,0 +1,44 @@
+<%- include('partials/head') %>
+<%- include('partials/icons') %>
+<%- include('partials/header') %>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="eyebrow">Прайс-лист</span>
+      <h1>Услуги и цены</h1>
+      <p class="lead">Стоимость указана «от» — точную смету мастер озвучит после диагностики и согласует с вами.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="pricelist">
+        <% services.forEach(function (s) { %>
+          <article class="price-row">
+            <svg class="card__icon"><use href="#icon-<%= s.icon || 'wrench' %>" /></svg>
+            <div class="price-row__body">
+              <h3><%= s.title %></h3>
+              <p><%= s.description %></p>
+            </div>
+            <div class="price-row__side">
+              <span class="card__time"><svg class="ico"><use href="#icon-clock" /></svg><%= s.duration_min %> мин</span>
+              <b>от <%= money(s.price_from) %> ₽</b>
+              <a class="btn btn--accent btn--sm" href="/booking?service=<%= s.id %>">Записаться</a>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+
+      <div class="notice">
+        <svg class="ico"><use href="#icon-check" /></svg>
+        <p>
+          В стоимость входит работа мастера. Расходники и запчасти оплачиваются отдельно —
+          все позиции фиксируются в смете до начала ремонта.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

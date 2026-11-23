@@ -1,0 +1,51 @@
+<header class="site-header">
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <span class="topbar__item">Ежедневно 09:00–21:00</span>
+      <span class="topbar__item">Москва, ул. Автозаводская, 18</span>
+      <a class="topbar__item topbar__phone" href="tel:+74951234567">+7 (495) 123-45-67</a>
+    </div>
+  </div>
+
+  <div class="container nav">
+    <a class="logo" href="/">
+      <svg class="logo__mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M30.8 8.6a10.4 10.4 0 0 0-12.6 13.1L6.8 33.1a4 4 0 0 0 5.7 5.7l11.4-11.4A10.4 10.4 0 0 0 37 14.7l-5.6 5.6-4.1-4.1 5.6-5.6a10.4 10.4 0 0 0-2.1-2z" fill="currentColor"/>
+      </svg>
+      <span class="logo__text">
+        <strong>ТурбоДоктор</strong>
+        <small>автосервис полного цикла</small>
+      </span>
+    </a>
+
+    <button class="nav__toggle" type="button" aria-label="Меню" data-nav-toggle>
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav__links" data-nav>
+      <a href="/" class="<%= page === 'home' ? 'is-active' : '' %>">Главная</a>
+      <a href="/services" class="<%= page === 'services' ? 'is-active' : '' %>">Услуги</a>
+      <a href="/booking" class="<%= page === 'booking' ? 'is-active' : '' %>">Запись</a>
+      <a href="/contacts" class="<%= page === 'contacts' ? 'is-active' : '' %>">Контакты</a>
+      <% if (admin) { %>
+        <a href="/admin" class="<%= page === 'admin' ? 'is-active' : '' %>">Панель</a>
+      <% } %>
+      <a href="/booking" class="btn btn--accent nav__cta">Записаться</a>
+    </nav>
+  </div>
+</header>
+
+<% if (demoMode) { %>
+  <div class="demo-banner">
+    <div class="container">
+      Демо-режим: MySQL не подключена, данные показываются из <code>data/demo-data.js</code>.
+      Подключение базы — <code>npm run db:init</code>, инструкция в README.
+    </div>
+  </div>
+<% } %>
+
+<% if (flash) { %>
+  <div class="container">
+    <div class="alert alert--<%= flash.type %>"><%= flash.text %></div>
+  </div>
+<% } %>

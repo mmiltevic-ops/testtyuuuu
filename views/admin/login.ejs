@@ -1,0 +1,38 @@
+<%- include('../partials/head') %>
+<%- include('../partials/icons') %>
+<%- include('../partials/header') %>
+
+<main>
+  <section class="section">
+    <div class="container auth">
+      <form class="card-panel form" method="post" action="/admin/login">
+        <span class="eyebrow">Служебный вход</span>
+        <h1>Панель управления</h1>
+        <p class="muted">Доступ только для сотрудников сервиса.</p>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert--error"><%= error %></div>
+        <% } %>
+
+        <div class="field">
+          <label for="username">Логин</label>
+          <input id="username" name="username" type="text" required autocomplete="username"
+                 value="<%= typeof username !== 'undefined' ? username : '' %>">
+        </div>
+        <div class="field">
+          <label for="password">Пароль</label>
+          <input id="password" name="password" type="password" required autocomplete="current-password">
+        </div>
+
+        <button class="btn btn--accent btn--lg" type="submit">Войти</button>
+
+        <p class="form__hint">
+          Логин и пароль по умолчанию: <code>admin</code> / <code>admin123</code>
+          (меняются в <code>.env</code> или таблице <code>admin_users</code>).
+        </p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

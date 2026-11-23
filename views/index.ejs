@@ -1,0 +1,179 @@
+<%- include('partials/head') %>
+<%- include('partials/icons') %>
+<%- include('partials/header') %>
+
+<main>
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <span class="eyebrow">Автосервис полного цикла · с 2009 года</span>
+        <h1>Ремонт автомобилей <span class="accent">без сюрпризов</span> в счёте</h1>
+        <p class="lead">
+          Диагностика, ТО и сложный ремонт по фиксированной смете. Согласовываем каждую работу,
+          показываем старые детали и даём гарантию до 12 месяцев.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--accent btn--lg" href="/booking">Записаться онлайн</a>
+          <a class="btn btn--ghost btn--lg" href="/services">Услуги и цены</a>
+        </div>
+        <ul class="hero__list">
+          <li><svg class="ico"><use href="#icon-check" /></svg> Бесплатная диагностика при ремонте</li>
+          <li><svg class="ico"><use href="#icon-check" /></svg> Запчасти в наличии на складе</li>
+          <li><svg class="ico"><use href="#icon-check" /></svg> Подменный автомобиль на время работ</li>
+        </ul>
+      </div>
+
+      <div class="hero__card">
+        <div class="hero-card__head">
+          <span class="pulse"></span>
+          <span>Сейчас в работе</span>
+          <strong>4 поста</strong>
+        </div>
+        <div class="hero-card__grid">
+          <div><span>Свободные окна</span><b>сегодня, 16:30</b></div>
+          <div><span>Средний чек ТО</span><b>от <%= money(2500) %> ₽</b></div>
+          <div><span>Гарантия</span><b>до 12 мес.</b></div>
+          <div><span>Оценка клиентов</span><b>4.9 / 5</b></div>
+        </div>
+        <div class="hero-card__note">
+          <svg class="ico"><use href="#icon-clock" /></svg>
+          Перезваниваем в течение 15 минут в рабочее время
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="stats">
+        <div class="stat"><b>17</b><span>лет на рынке</span></div>
+        <div class="stat"><b>24 000+</b><span>отремонтированных авто</span></div>
+        <div class="stat"><b>12</b><span>сертифицированных мастеров</span></div>
+        <div class="stat"><b>98%</b><span>клиентов возвращаются</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section__head">
+        <div>
+          <span class="eyebrow">Что мы делаем</span>
+          <h2>Популярные услуги</h2>
+        </div>
+        <a class="link-arrow" href="/services">Все услуги и цены <span>→</span></a>
+      </div>
+
+      <div class="cards">
+        <% services.forEach(function (s) { %>
+          <article class="card">
+            <svg class="card__icon"><use href="#icon-<%= s.icon || 'wrench' %>" /></svg>
+            <h3><%= s.title %></h3>
+            <p><%= s.description %></p>
+            <div class="card__meta">
+              <span class="card__price">от <%= money(s.price_from) %> ₽</span>
+              <span class="card__time"><svg class="ico"><use href="#icon-clock" /></svg><%= s.duration_min %> мин</span>
+            </div>
+            <a class="card__link" href="/booking?service=<%= s.id %>">Записаться на услугу →</a>
+          </article>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section__head">
+        <div>
+          <span class="eyebrow">Подход</span>
+          <h2>Почему нам доверяют</h2>
+        </div>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <svg class="card__icon"><use href="#icon-shield" /></svg>
+          <h3>Гарантия на работы</h3>
+          <p>До 12 месяцев на ремонт и до 24 месяцев на запчасти. Гарантийный талон выдаём вместе с чеком.</p>
+        </div>
+        <div class="feature">
+          <svg class="card__icon"><use href="#icon-check" /></svg>
+          <h3>Фиксированная смета</h3>
+          <p>Стоимость согласовываем до начала ремонта. Дополнительные работы — только с вашего письменного согласия.</p>
+        </div>
+        <div class="feature">
+          <svg class="card__icon"><use href="#icon-clock" /></svg>
+          <h3>Ремонт в срок</h3>
+          <p>Собственный склад и прямые поставки запчастей: 85% работ выполняем в день обращения.</p>
+        </div>
+        <div class="feature">
+          <svg class="card__icon"><use href="#icon-diag" /></svg>
+          <h3>Честная диагностика</h3>
+          <p>Показываем распечатку ошибок и изношенные детали. Не предлагаем ремонт того, что ещё работает.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section__head">
+        <div>
+          <span class="eyebrow">Команда</span>
+          <h2>Мастера, которым доверяют ключи</h2>
+        </div>
+      </div>
+
+      <div class="masters">
+        <% masters.forEach(function (m) { %>
+          <div class="master">
+            <div class="master__avatar"><%= m.name.trim().charAt(0) %></div>
+            <h3><%= m.name %></h3>
+            <p><%= m.position %></p>
+            <span class="master__exp">опыт <%= m.experience_years %> лет</span>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section__head">
+        <div>
+          <span class="eyebrow">Отзывы</span>
+          <h2>Что говорят клиенты</h2>
+        </div>
+      </div>
+
+      <div class="reviews">
+        <% reviews.forEach(function (r) { %>
+          <figure class="review">
+            <div class="review__stars">
+              <% for (let i = 1; i <= 5; i++) { %>
+                <svg class="ico <%= i <= r.rating ? 'is-filled' : '' %>"><use href="#icon-star" /></svg>
+              <% } %>
+            </div>
+            <blockquote><%= r.text %></blockquote>
+            <figcaption><b><%= r.author %></b><span><%= r.car %></span></figcaption>
+          </figure>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Запишитесь на удобное время</h2>
+          <p>Оставьте заявку — мастер-приёмщик уточнит детали и подтвердит запись звонком.</p>
+        </div>
+        <div class="cta-band__actions">
+          <a class="btn btn--accent btn--lg" href="/booking">Оставить заявку</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+74951234567">+7 (495) 123-45-67</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

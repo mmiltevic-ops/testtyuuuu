@@ -1,0 +1,102 @@
+<%- include('partials/head') %>
+<%- include('partials/icons') %>
+<%- include('partials/header') %>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="eyebrow">Онлайн-запись</span>
+      <h1>Записаться на ремонт</h1>
+      <p class="lead">Заполните форму — мы перезвоним в течение 15 минут и подтвердим время визита.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container booking-layout">
+      <form class="form card-panel" method="post" action="/booking" novalidate>
+        <% if (success) { %>
+          <div class="alert alert--success">Заявка отправлена. Мы свяжемся с вами в ближайшее время.</div>
+        <% } %>
+
+        <% if (errors && errors.length) { %>
+          <div class="alert alert--error">
+            <b>Проверьте форму:</b>
+            <ul>
+              <% errors.forEach(function (e) { %>
+                <li><%= e %></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+
+        <div class="field">
+          <label for="service_id">Услуга</label>
+          <select id="service_id" name="service_id">
+            <option value="">Не знаю / нужна консультация</option>
+            <% services.forEach(function (s) { %>
+              <option value="<%= s.id %>" <%= String(values.service_id) === String(s.id) ? 'selected' : '' %>>
+                <%= s.title %> — от <%= money(s.price_from) %> ₽
+              </option>
+            <% }); %>
+          </select>
+        </div>
+
+        <div class="form__grid">
+          <div class="field">
+            <label for="client_name">Ваше имя *</label>
+            <input id="client_name" name="client_name" type="text" required maxlength="60"
+                   value="<%= values.client_name || '' %>" placeholder="Иван">
+          </div>
+          <div class="field">
+            <label for="phone">Телефон *</label>
+            <input id="phone" name="phone" type="tel" required maxlength="20"
+                   value="<%= values.phone || '' %>" placeholder="+7 999 123-45-67">
+          </div>
+        </div>
+
+        <div class="form__grid">
+          <div class="field">
+            <label for="car_model">Автомобиль</label>
+            <input id="car_model" name="car_model" type="text" maxlength="80"
+                   value="<%= values.car_model || '' %>" placeholder="Toyota Camry, 2019">
+          </div>
+          <div class="field">
+            <label for="preferred_date">Желаемая дата</label>
+            <input id="preferred_date" name="preferred_date" type="date" value="<%= values.preferred_date || '' %>">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="comment">Комментарий</label>
+          <textarea id="comment" name="comment" rows="4" maxlength="600"
+                    placeholder="Опишите проблему: стук, ошибка на панели, плановое ТО…"><%= values.comment || '' %></textarea>
+        </div>
+
+        <div class="form__foot">
+          <button class="btn btn--accent btn--lg" type="submit">Отправить заявку</button>
+          <span class="form__hint">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных.</span>
+        </div>
+      </form>
+
+      <aside class="booking-side">
+        <div class="card-panel">
+          <h3>Как проходит запись</h3>
+          <ol class="steps">
+            <li><b>Заявка</b><span>Оставляете форму или звоните</span></li>
+            <li><b>Звонок</b><span>Уточняем детали и время</span></li>
+            <li><b>Диагностика</b><span>Бесплатно при ремонте у нас</span></li>
+            <li><b>Ремонт</b><span>По согласованной смете</span></li>
+          </ol>
+        </div>
+
+        <div class="card-panel card-panel--accent">
+          <h3>Нужна помощь сейчас?</h3>
+          <p>Позвоните — мастер-приёмщик ответит на вопросы и подскажет, можно ли доехать своим ходом.</p>
+          <a class="btn btn--light btn--lg" href="tel:+74951234567">+7 (495) 123-45-67</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
